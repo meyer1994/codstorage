@@ -7,8 +7,9 @@ from fastapi.responses import StreamingResponse
 
 from codstorage.git import Service, Git
 
-
+CURRDIR = Path.cwd()
 TEMPDIR = TemporaryDirectory()
+
 logger = logging.getLogger(__name__)
 
 router = APIRouter()
@@ -19,16 +20,17 @@ async def inforefs(path: str, service: Service):
     path = Path(TEMPDIR.name, path)
     repo = Git(path) if path.exists() else Git.init(path)
 
-    hook = r'''
+    hook = f'''
         #!/bin/sh
-        echo "hello world"
+        echo {CURRDIR}
+        cd {CURRDIR}
+        python -m codstorage
     '''
     repo.add_hook('post-receive', hook)
 
     data = repo.inforefs(service.value)
     media = f'application/x-{service.value}-advertisement'
     return StreamingResponse(data, media_type=media)
-
 
 
 @router.post('/{path}/{service}')
