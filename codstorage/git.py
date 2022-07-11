@@ -6,6 +6,7 @@ from typing import IO
 from pathlib import Path
 from subprocess import PIPE
 
+from pfluent import Runner
 
 logger = logging.getLogger(__name__)
 
@@ -22,7 +23,7 @@ class Git(object):
 
     @staticmethod
     def init(path: str) -> 'Git':
-        logger.info('Initing git repo: %s', self.path)
+        logger.info('Initing git repo: %s', path)
 
         Runner('git')\
             .arg('init')\

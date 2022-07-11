@@ -3,6 +3,7 @@ from pathlib import Path
 from tempfile import TemporaryDirectory
 
 from fastapi import APIRouter, Request
+from fastapi.responses import StreamingResponse
 
 from codstorage.git import Service, Git
 
@@ -24,8 +25,8 @@ async def inforefs(path: str, service: Service):
     '''
     repo.add_hook('post-receive', hook)
 
-    data = repo.inforefs(service)
-    media = f'application/x-{service}-advertisement'
+    data = repo.inforefs(service.value)
+    media = f'application/x-{service.value}-advertisement'
     return StreamingResponse(data, media_type=media)
 
 
@@ -39,6 +40,6 @@ async def service(path: str, service: Service, req: Request):
     data = [data async for data in stream]
     data = b''.join(data)
 
-    data = repo.service(service, data)
-    media = f'application/x-{service}-result'
+    data = repo.service(service.value, data)
+    media = f'application/x-{service.value}-result'
     return StreamingResponse(data, media_type=media)
