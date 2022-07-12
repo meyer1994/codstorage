@@ -30,10 +30,6 @@ class Git(object):
             .arg(path)\
             .run(check=True)
 
-        logger.info('Adding "hooks" dir to repo: %s', path)
-        hooks = Path(path, 'hooks')
-        hooks.mkdir(parents=True, exist_ok=True)
-
         return Git(path)
 
     def add_hook(self, name: str, hook: str) -> str:
