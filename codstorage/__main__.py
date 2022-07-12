@@ -19,6 +19,8 @@ ipld = Repo(args.path)
 ipld = IPLD(ipld)
 ipld = ipld.send()
 
+args.output.write('\n')
+
 output = f'IPLD: {ipld}\n'
 args.output.write(output)
 
@@ -32,3 +34,5 @@ result = Runner('ipfs')\
 
 output = f'IPFS: {result.stdout}'
 args.output.write(output)
+
+args.output.write('\n')
