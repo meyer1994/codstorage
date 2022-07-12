@@ -27,8 +27,8 @@ jobs:
           docker ps -a
       - name: Test container
         run: |
-          git remote add local http://localhost:8000/go-ipfs
-          git push local master
+          git remote add local http://localhost:8000/codstorage
+          git push local main
 
   deploy:
     if: github.ref == 'refs/heads/master'
