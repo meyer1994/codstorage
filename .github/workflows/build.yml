@@ -15,26 +15,11 @@ jobs:
           cache: 'pip'
       - run: pip install -r requirements.txt
 
-  image:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v3
-      - run: docker build . -t codstorage
-      - name: Run container
-        run: |
-          docker run --rm -itd -p 8000:8000 codstorage
-          sleep 10
-          docker ps -a
-      - name: Test container
-        run: |
-          git remote add local http://localhost:8000/codstorage
-          git push local main
-
   deploy:
-    if: github.ref == 'refs/heads/master'
+    if: github.ref == 'refs/heads/main'
     runs-on: ubuntu-latest
     needs:
-      - image
+      - build
     steps:
       - uses: actions/checkout@v3
       - uses: akhileshns/heroku-deploy@v3.12.12
