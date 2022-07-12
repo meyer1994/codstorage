@@ -23,21 +23,25 @@ class Git(object):
 
     @staticmethod
     def init(path: str) -> 'Git':
-        logger.info('Initing git repo: %s', path)
-
+        logger.info('Creating git repo: %s', path)
         Runner('git')\
             .arg('init')\
             .arg('--bare')\
             .arg(path)\
             .run(check=True)
 
+        logger.info('Adding "hooks" dir to repo: %s', path)
+        hooks = Path(path, 'hooks')
+        hooks.mkdir(parents=True, exist_ok=True)
+
         return Git(path)
 
     def add_hook(self, name: str, hook: str) -> str:
-        logger.info('Adding hook %s to repo: %s', name, self.path)
-
+        logger.info('Adding hook "%s" to repo: %s', name, self.path)
         path = Path(self.path, 'hooks', name)
         path.write_text(hook)
+
+        logger.info('Making hook "%s" executable', name)
         st = path.stat()
         path.chmod(st.st_mode | stat.S_IEXEC)
 
