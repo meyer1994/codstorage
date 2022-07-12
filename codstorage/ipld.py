@@ -63,7 +63,8 @@ class IPLD(object):
         commits = {c.hexsha: self._send_commit(c) for c in commits}
         return self._put(commits)
 
-    def send(self) -> dict:
+    def send(self) -> str:
         branches = {b.name: self._send_branch(b) for b in self.repo.branches}
         branches = {'blobs': branches}
-        return self._put(branches)
+        data = self._put(branches)
+        return data['/']

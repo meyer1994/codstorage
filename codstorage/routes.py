@@ -22,9 +22,7 @@ async def inforefs(path: str, service: Service):
 
     hook = f'''
         #!/bin/sh
-        echo {CURRDIR}
-        cd {CURRDIR}
-        python -m codstorage {path}
+        cd {CURRDIR} && python -m codstorage {path}
     '''
     repo.add_hook('post-receive', hook)
 
