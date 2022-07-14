@@ -3,7 +3,7 @@
 [![build](https://github.com/meyer1994/codstorage/actions/workflows/build.yml/badge.svg)](https://github.com/meyer1994/codstorage/actions/workflows/build.yml)
 [![standard-readme compliant](https://img.shields.io/badge/readme%20style-standard-brightgreen.svg?style=flat-square)](https://github.com/RichardLitt/standard-readme)
 
-Store your code in IPFS/IPLD and audits in Ceramic
+Store your git repositories in IPFS, IPLD and commits on Ceramic
 
 ## Table of Contents
 
