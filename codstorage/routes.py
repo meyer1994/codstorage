@@ -2,7 +2,8 @@ import logging
 from pathlib import Path
 from tempfile import TemporaryDirectory
 
-from fastapi import APIRouter, Request
+import httpx
+from fastapi import APIRouter, Request, Response
 from fastapi.responses import StreamingResponse
 
 from codstorage.git import Service, Git

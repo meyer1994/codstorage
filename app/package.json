@@ -1,0 +1,18 @@
+{
+  "private": true,
+  "scripts": {
+    "build": "nuxt build",
+    "dev": "nuxt dev",
+    "generate": "nuxt generate",
+    "preview": "nuxt preview"
+  },
+  "devDependencies": {
+    "@nuxtjs/tailwindcss": "^5.3.0",
+    "@tailwindcss/forms": "^0.5.2",
+    "@vueuse/nuxt": "^8.9.4",
+    "nuxt": "3.0.0-rc.5"
+  },
+  "dependencies": {
+    "ipfs-http-client": "^57.0.3"
+  }
+}

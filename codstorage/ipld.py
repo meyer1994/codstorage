@@ -41,8 +41,8 @@ class IPLD(object):
         data = {b.name: self._send_blob(b) for b in tree.blobs}
         return self._put(data)
 
-    def _send_commit(self, commit: object) -> dict:
-        node = {
+    def _commit(self, commit: object) -> dict:
+        return {
             'author': {
                 'date': commit.authored_datetime.isoformat(),
                 'email': commit.author.email,
@@ -56,15 +56,14 @@ class IPLD(object):
             'tree': {t.name: self._send_tree(t) for t in commit.tree},
             'message': commit.message,
         }
-        return self._put(node)
 
     def _send_branch(self, branch: object) -> dict:
         commits = self.repo.iter_commits(branch.name)
-        commits = {c.hexsha: self._send_commit(c) for c in commits}
+        commits = {c.hexsha: self._commit(c) for c in commits}
         return self._put(commits)
 
     def send(self) -> str:
         branches = {b.name: self._send_branch(b) for b in self.repo.branches}
-        branches = {'blobs': branches}
+        # branches = {'blobs': branches}
         data = self._put(branches)
         return data['/']
