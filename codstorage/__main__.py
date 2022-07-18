@@ -1,4 +1,5 @@
 import sys
+import json
 from pathlib import Path
 from argparse import ArgumentParser, FileType
 
@@ -32,7 +33,15 @@ result = Runner('ipfs')\
     .arg('--api', '/ip4/127.0.0.1/tcp/5001')\
     .run(check=True, capture_output=True, text=True)
 
-output = f'IPFS: {result.stdout}'
+ipfs = result.stdout.strip()
+output = f'IPFS: {ipfs}\n'
 args.output.write(output)
 
 args.output.write('\n')
+
+path = args.path.parts[:-1]
+user = args.path.parts[-1] + '.json'
+last = Path(*path, user)
+with open(last, 'wt') as f:
+    data = {'ipfs': ipfs, 'ipld': ipld}
+    json.dump(data, f)

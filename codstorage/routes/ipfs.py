@@ -12,6 +12,13 @@ from codstorage.utils.git import Service, Git
 router = APIRouter()
 
 
+@dataclass
+class Post:
+    qmhash: str
+    service: Service
+    req: Request
+
+
 @router.get('/Qm{qmhash}/info/refs')
 async def ipfsinforefs(qmhash: str, service: Service):
     qmhash = f'Qm{qmhash}'
@@ -27,13 +34,6 @@ async def ipfsinforefs(qmhash: str, service: Service):
     data = repo.inforefs(service.value)
     media = f'application/x-{service.value}-advertisement'
     return StreamingResponse(data, media_type=media)
-
-
-@dataclass
-class Post:
-    qmhash: str
-    service: Service
-    req: Request
 
 
 @router.post('/Qm{qmhash}/{service}')

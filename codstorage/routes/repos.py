@@ -18,7 +18,6 @@ router = APIRouter()
 
 @dataclass
 class Get:
-    user: str
     path: str
     service: Service
     address: str = Depends(magic.ethaddress)
@@ -26,16 +25,15 @@ class Get:
 
 @dataclass
 class Post:
-    user: str
     path: str
     service: Service
     req: Request
     address: str = Depends(magic.ethaddress)
 
 
-@router.get('/{user}/{path}/info/refs')
+@router.get('/{path}/info/refs')
 async def inforefs(ctx: Get = Depends(Get)):
-    path = config.CODSTORAGE_REPOS_DIR / ctx.user / ctx.path
+    path = config.CODSTORAGE_REPOS_DIR / ctx.address / ctx.path
     repo = Git(path) if path.exists() else Git.init(path)
 
     hook = f'''
@@ -49,9 +47,9 @@ async def inforefs(ctx: Get = Depends(Get)):
     return StreamingResponse(data, media_type=media)
 
 
-@router.post('/{user}/{path}/{service}')
+@router.post('/{path}/{service}')
 async def service(ctx: Post = Depends(Post)):
-    path = config.CODSTORAGE_REPOS_DIR / ctx.user / ctx.path
+    path = config.CODSTORAGE_REPOS_DIR / ctx.address / ctx.path
     repo = Git(path)
 
     stream = ctx.req.stream()
