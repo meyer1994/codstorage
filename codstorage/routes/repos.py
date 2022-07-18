@@ -21,6 +21,7 @@ class Get:
     user: str
     path: str
     service: Service
+    address: str = Depends(magic.ethaddress)
 
 
 @dataclass
