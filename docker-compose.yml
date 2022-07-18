@@ -2,15 +2,20 @@ version: '3'
 
 services:
   ipfs:
-    image: ipfs/go-ipfs:latest
+    image: ipfs/go-ipfs
     ports:
       - 5001:5001
       - 8080:8080
     volumes:
-      - './configs/ipfs.config:/data/ipfs/config'
+      - './ipfs.sh:/ipfs.sh'
+    entrypoint: 'sh ipfs.sh'
 
-  ganache:
-    image: trufflesuite/ganache
+  caddy:
+    image: caddy
     ports:
-      - 8545:8545
-    command: --wallet.deterministic
+      - 80:80
+    volumes:
+      - './caddy.conf:/srv/Caddyfile'
+    environment:
+      PORT: 81
+    command: caddy run --config Caddyfile
