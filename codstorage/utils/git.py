@@ -27,6 +27,7 @@ class Git(object):
         Runner('git')\
             .arg('init')\
             .arg('--bare')\
+            .arg('--initial-branch', 'main')\
             .arg(path)\
             .run(check=True)
 
