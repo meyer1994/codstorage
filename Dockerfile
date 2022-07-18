@@ -1,21 +1,20 @@
-FROM ipfs/go-ipfs:latest as ipfs
+FROM bitnami/git as git
+FROM ipfs/go-ipfs as ipfs
+FROM caddy:alpine as caddy
 
 FROM python:slim
 
 WORKDIR /app
 
-COPY --from=ipfs /usr/local/bin/ipfs /bin/ipfs
+RUN pip install supervisor
 
-RUN apt update \
-    && apt install -y git \
-    && rm -rf /var/lib/apt/lists/*
+COPY --from=git /opt/bitnami/git/bin/git* /usr/local/bin/
+COPY --from=caddy /usr/bin/caddy /usr/local/bin/caddy
+COPY --from=ipfs /usr/local/bin/ipfs /usr/local/bin/ipfs
 
 COPY ./requirements.txt .
 RUN pip install -r requirements.txt
 
 COPY ./ ./
 
-ENV PORT=8000
-
-CMD ipfs daemon --init \
-    & uvicorn codstorage:app --host 0.0.0.0 --port ${PORT}
+CMD [ "supervisord", "-c", "supervisord.conf" ]
