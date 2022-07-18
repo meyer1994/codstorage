@@ -8,6 +8,7 @@ from codstorage.routes import router
 logging.basicConfig(level=logging.INFO)
 
 app = FastAPI()
+app.include_router(router)
 
 app.add_middleware(
     CORSMiddleware,
@@ -16,5 +17,3 @@ app.add_middleware(
     allow_headers=['*'],
     allow_credentials=True,
 )
-
-app.include_router(router)

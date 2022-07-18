@@ -5,7 +5,7 @@ from argparse import ArgumentParser, FileType
 from git import Repo
 from pfluent import Runner
 
-from codstorage.ipld import IPLD
+from codstorage.utils.ipld import IPLD
 
 FILE_OUT = FileType('wt')
 
