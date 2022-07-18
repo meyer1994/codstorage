@@ -2,7 +2,7 @@ set -ev
 
 ipfs daemon --init &
 
-sleep 5
+sleep 15
 
 ipfs config --json API.HTTPHeaders.Access-Control-Allow-Origin '["*"]'
 ipfs config --json API.HTTPHeaders.Access-Control-Allow-Methods '["GET", "POST"]'
