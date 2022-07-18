@@ -12,7 +12,7 @@ cytoolz==0.12.0
 eth-abi==2.1.1
 eth-account==0.5.8
 eth-hash==0.4.0
-eth-keyfile==0.5.1
+eth-keyfile==0.6.0
 eth-keys==0.3.4
 eth-rlp==0.2.1
 eth-typing==2.3.0
