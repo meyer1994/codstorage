@@ -1,14 +1,12 @@
 import asyncio
 from pathlib import Path
-from argparse import ArgumentParser, FileType
+from argparse import ArgumentParser
 
 from git import Repo
 from pfluent import Runner
 
 from codstorage.db import db
 from codstorage.utils.ipld import IPLD
-
-FILEOUT = FileType('wt')
 
 parser = ArgumentParser()
 parser.add_argument('path', type=Path)
