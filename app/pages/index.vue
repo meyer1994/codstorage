@@ -1,29 +1,37 @@
 <script setup>
-const { data, refresh } = await useAsyncData('repos', () => useApi('/repos'))
+const { provider, signer } = useEthers()
+const { data } = await useAsyncData('repos', () => useApi('/repos'))
 </script>
 
 <template>
 <div class="flex flex-col">
   <div> Repos </div>
+  <div> {{ client }} </div>
 
   <table>
     <thead>
       <tr>
-        <td>IPFS</td>
-        <td>IPLD</td>
-        <td>Likes</td>
+        <td> Ipfs </td>
+        <td> Ipld </td>
+        <td> Likes </td>
+        <td class="invisible"> - </td>
       </tr>
     </thead>
     <tbody>
       <tr v-for="(v, k) of data">
-        <td>
-          {{ v.ipfs }}
+        <td class="font-mono">
+          <NuxtLink :to="`/repos/${v.ipld}`">
+            {{ v.ipfs }}
+          </NuxtLink>
         </td>
-        <td>
-          <NuxtLink :to="`/repos/${v.ipld}`"> {{ v.ipld }} </NuxtLink>
+        <td class="font-mono">
+          <NuxtLink :to="`/repos/${v.ipld}`">
+            {{ v.ipld }}
+          </NuxtLink>
         </td>
+        <td> {{ v.likes }} </td>
         <td>
-          {{ v.likes }}
+          <button @click="share"> Share </button>
         </td>
       </tr>
     </tbody>

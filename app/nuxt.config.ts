@@ -5,5 +5,10 @@ export default defineNuxtConfig({
   modules: [
     '@vueuse/nuxt',
     '@nuxtjs/tailwindcss',
-  ]
+  ],
+  vite: {
+    target: [
+      'es2020'
+    ]
+  }
 })

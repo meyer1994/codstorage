@@ -14,6 +14,8 @@
     "nuxt": "3.0.0-rc.5"
   },
   "dependencies": {
+    "@xmtp/xmtp-js": "^5.0.0",
+    "ethers": "^5.6.9",
     "ipfs-http-client": "^57.0.3"
   }
 }

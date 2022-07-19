@@ -32,7 +32,11 @@ const files = computed(() => {
     </thead>
     <tbody>
       <tr v-for="[name, link] of dirs" :key="name">
-        <td> {{ name }} </td>
+        <td>
+          <NuxtLink :to="`/trees/${link}`">
+            {{ name }}
+          </NuxtLink>
+        </td>
         <td class="font-mono" :title="link">
           <NuxtLink :to="`/trees/${link}`">
             {{ link.substring(0, 16) }}

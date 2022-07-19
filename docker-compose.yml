@@ -2,7 +2,17 @@ version: '3'
 
 services:
   ipfs:
-    image: ipfs/go-ipfs
+    image: ceramicnetwork/go-ipfs-daemon
     ports:
       - 5001:5001
       - 8080:8080
+      - 8011:8011
+
+  ceramic:
+    image: ceramicnetwork/js-ceramic
+    environment:
+      NODE_ENV: production
+    ports:
+      - 7007:7007
+    depends_on:
+      - ipfs
