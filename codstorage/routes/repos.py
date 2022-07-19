@@ -5,7 +5,6 @@ from dataclasses import dataclass
 from fastapi import APIRouter, Request, Depends
 from fastapi.responses import StreamingResponse
 
-from codstorage.utils import magic
 from codstorage.config import config
 from codstorage.utils.git import Service, Git
 
@@ -20,7 +19,6 @@ router = APIRouter()
 class Get:
     path: str
     service: Service
-    address: str = Depends(magic.ethaddress)
 
 
 @dataclass
@@ -28,12 +26,11 @@ class Post:
     path: str
     service: Service
     req: Request
-    address: str = Depends(magic.ethaddress)
 
 
 @router.get('/{path}/info/refs')
 async def inforefs(ctx: Get = Depends(Get)):
-    path = config.CODSTORAGE_REPOS_DIR / ctx.address / ctx.path
+    path = config.CODSTORAGE_REPOS_DIR / ctx.path
     repo = Git(path) if path.exists() else Git.init(path)
 
     hook = f'''
@@ -49,7 +46,7 @@ async def inforefs(ctx: Get = Depends(Get)):
 
 @router.post('/{path}/{service}')
 async def service(ctx: Post = Depends(Post)):
-    path = config.CODSTORAGE_REPOS_DIR / ctx.address / ctx.path
+    path = config.CODSTORAGE_REPOS_DIR / ctx.path
     repo = Git(path)
 
     stream = ctx.req.stream()

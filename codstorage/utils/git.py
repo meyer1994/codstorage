@@ -8,8 +8,6 @@ from subprocess import PIPE
 
 from pfluent import Runner
 
-logger = logging.getLogger(__name__)
-
 
 class Service(str, Enum):
     UPLOAD = 'git-upload-pack'
@@ -23,7 +21,6 @@ class Git(object):
 
     @staticmethod
     def init(path: str) -> 'Git':
-        logger.info('Creating git repo: %s', path)
         Runner('git')\
             .arg('init')\
             .arg('--bare')\
@@ -34,19 +31,15 @@ class Git(object):
         return Git(path)
 
     def add_hook(self, name: str, hook: str) -> str:
-        logger.info('Adding hook "%s" to repo: %s', name, self.path)
         path = Path(self.path, 'hooks', name)
         path.write_text(hook)
 
-        logger.info('Making hook "%s" executable', name)
         st = path.stat()
         path.chmod(st.st_mode | stat.S_IEXEC)
 
         return str(path)
 
     def inforefs(self, service: Service) -> IO:
-        logger.info('Fetching info/refs for git repo: %s', self.path)
-
         result = Runner(service)\
             .arg('--stateless-rpc')\
             .arg('--advertise-refs')\
@@ -63,8 +56,6 @@ class Git(object):
         return io.BytesIO(data)
 
     def service(self, service: Service, data: bytes) -> IO:
-        logger.info('Fetching info/refs for git repo: %s', self.path)
-
         proc = Runner(service)\
             .arg('--stateless-rpc')\
             .arg(self.path)\
