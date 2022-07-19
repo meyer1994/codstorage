@@ -1,5 +1,4 @@
 from pathlib import Path
-from tempfile import TemporaryDirectory, NamedTemporaryFile
 
 from pydantic import BaseSettings
 
@@ -10,5 +9,3 @@ class Config(BaseSettings):
 
 
 config = Config()
-config.CODSTORAGE_REPOS_DIR.mkdir(parents=True, exist_ok=True)
-config.CODSTORAGE_SQLITE_FILE.touch(exist_ok=True)

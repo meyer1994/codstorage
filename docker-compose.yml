@@ -6,6 +6,3 @@ services:
     ports:
       - 5001:5001
       - 8080:8080
-    volumes:
-      - './ipfs.sh:/ipfs.sh'
-    entrypoint: 'sh ipfs.sh'

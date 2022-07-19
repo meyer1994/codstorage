@@ -42,7 +42,9 @@ class IPLD(object):
         return self._put(data)
 
     def _commit(self, commit: object) -> dict:
+        tree = {t.name: self._send_tree(t) for t in commit.tree}
         return {
+            'hash': commit.hexsha,
             'author': {
                 'date': commit.authored_datetime.isoformat(),
                 'email': commit.author.email,
@@ -53,13 +55,16 @@ class IPLD(object):
                 'email': commit.committer.email,
                 'name': commit.committer.name,
             },
-            'tree': {t.name: self._send_tree(t) for t in commit.tree},
+            'tree': self._put(tree),
             'message': commit.message,
         }
 
     def _send_branch(self, branch: object) -> dict:
         commits = self.repo.iter_commits(branch.name)
-        commits = {c.hexsha: self._commit(c) for c in commits}
+        commits = [self._commit(c) for c in commits]
+        commits = sorted(commits, key=lambda i: i['committer']['date'])
+        commits = reversed(commits)
+        commits = list(commits)
         return self._put(commits)
 
     def send(self) -> str:
