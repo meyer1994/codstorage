@@ -21,6 +21,10 @@ app.add_middleware(
 
 @app.on_event('startup')
 async def startup():
+    # Create
+    config.CODSTORAGE_REPOS_DIR.mkdir(parents=True, exist_ok=True)
+    config.CODSTORAGE_SQLITE_FILE.touch(exist_ok=True)
+
     await db.connect()
     query = '''
         CREATE TABLE IF NOT EXISTS repos(
@@ -30,10 +34,6 @@ async def startup():
         )
     '''
     await db.execute(query)
-
-    # Create
-    config.CODSTORAGE_REPOS_DIR.mkdir(parents=True, exist_ok=True)
-    config.CODSTORAGE_SQLITE_FILE.touch(exist_ok=True)
 
 
 @app.on_event('shutdown')
