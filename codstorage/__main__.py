@@ -31,7 +31,7 @@ async def run_ipld(path: str):
 
 
 async def run_ceramic(path: str):
-
+    pass
 
 
 async def main():
