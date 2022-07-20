@@ -1,6 +1,4 @@
-
-
-name: build
+name: vercel
 
 on:
   - push
