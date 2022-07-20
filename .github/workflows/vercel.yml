@@ -4,11 +4,11 @@ on:
   - push
   - pull_request
 
-defaults:
-  run:
-    working-directory: ./app
-
 jobs:
+  defaults:
+    run:
+      working-directory: ./app
+
   build:
     runs-on: ubuntu-latest
     steps:
