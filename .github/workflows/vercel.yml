@@ -4,15 +4,17 @@ on:
   - push
   - pull_request
 
-jobs:
-  defaults:
-    run:
-      working-directory: ./app
+defaults:
+  run:
+    working-directory: app
 
+jobs:
   build:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
+      - run: ls
+      - run: pwd
       - uses: actions/setup-node@v3
         with:
           node-version: current
