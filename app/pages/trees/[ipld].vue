@@ -45,10 +45,14 @@ const files = computed(() => {
 
       <tr class="border-y" v-for="[name, link] of files" :key="name">
         <td class="py-1 font-mono">
-          {{ name }}
+          <NuxtLink class="hover:text-blue-800 hover:underline" :to="`/files/${link}`">
+            {{ name }}
+          </NuxtLink>
         </td>
         <td class="py-1 font-mono" :title="link">
-          {{ link }}
+          <NuxtLink class="hover:text-blue-800 hover:underline" :to="`/files/${link}`">
+            {{ link }}
+          </NuxtLink>
         </td>
       </tr>
     </tbody>
