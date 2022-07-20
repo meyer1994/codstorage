@@ -17,5 +17,5 @@ async def ping():
 router.include_router(router_ipns, prefix='/ipld')
 router.include_router(router_repos, prefix='/repos')
 
-router.include_router(router_git)
 router.include_router(router_ipfs)
+router.include_router(router_git)
