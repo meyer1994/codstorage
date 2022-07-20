@@ -27,7 +27,7 @@ async def run_ipfs(path: str):
 async def run_ipld(path: str):
     ipld = Repo(path)
     ipld = IPLD(ipld)
-    return ipld.send()
+    return await ipld.send()
 
 
 async def run_ceramic(path: str):
