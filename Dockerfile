@@ -1,10 +1,7 @@
 FROM ipfs/go-ipfs as ipfs
-
 FROM python:slim
 
 WORKDIR /app
-
-RUN pip install supervisor
 
 COPY --from=ipfs /usr/local/bin/ipfs /usr/local/bin/ipfs
 
@@ -17,4 +14,6 @@ RUN pip install -r requirements.txt
 
 COPY ./ ./
 
-CMD [ "supervisord", "-c", "supervisord.conf" ]
+ENV PORT=8000
+
+CMD ipfs daemon --init & uvicorn codstorage:app --port $PORT --host 0.0.0.0
