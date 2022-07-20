@@ -38,8 +38,9 @@ class IPLD(object):
     def _send_tree(self, tree: object) -> dict:
         if tree.type == 'blob':
             return self._send_blob(tree)
-        data = {b.name: self._send_blob(b) for b in tree.blobs}
-        return self._put(data)
+        files = {b.name: self._send_blob(b) for b in tree.blobs}
+        trees = {t.name: self._send_tree(t) for t in tree.trees}
+        return self._put(files | trees)
 
     def _commit(self, commit: object) -> dict:
         tree = {t.name: self._send_tree(t) for t in commit.tree}
