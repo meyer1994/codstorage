@@ -31,7 +31,10 @@ class Git(object):
         return Git(path)
 
     def add_hook(self, name: str, hook: str) -> str:
-        path = Path(self.path, 'hooks', name)
+        hooks = self.path / 'hooks'
+        hooks.mkdir(parents=True, exist_ok=True)
+
+        path = self.path / 'hooks' / name
         path.write_text(hook)
 
         st = path.stat()
