@@ -1,7 +1,6 @@
 <script setup>
 const { params: { ipld } } = useRoute()
-
-const { data } = await useAsyncData(`branch_${ipld}`, () => useApi(`/ipld/${ipld}`))
+const { data } = await useApi(() => `/ipld/${ipld}`)
 </script>
 
 <template>

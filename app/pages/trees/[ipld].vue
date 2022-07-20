@@ -1,10 +1,7 @@
 <script setup>
 const { params: { ipld } } = useRoute()
 
-const { data: tree } = await useAsyncData(
-    `tree_${ipld}`,
-    () => useApi(`/ipld/${ipld}`)
-)
+const { data: tree } = await useApi(() => `/ipld/${ipld}`)
 
 const dirs = computed(() => {
   return Object.entries(tree.value)

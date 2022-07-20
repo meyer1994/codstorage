@@ -1,8 +1,8 @@
 <script setup>
-const { enabled, ethereum, account } = useMetamask()
+const { enabled, request, account } = useMetamask()
 
-const request = async () => {
-  const [head, ...tail] = await ethereum.request({ method: 'eth_requestAccounts' })
+const login = async () => {
+  const [head, ...tail] = await request({ method: 'eth_requestAccounts' })
   account.value = head
 }
 </script>
@@ -19,7 +19,7 @@ const request = async () => {
 
   <!-- Right -->
   <div>
-    <button :class="{ disabled: !enabled }" @click="request">
+    <button :class="{ disabled: !enabled }" @click="login">
       <span v-if="!account"> Connect </span>
       <span v-else> Connected ({{ account.substring(0, 8) }})</span>
     </button>

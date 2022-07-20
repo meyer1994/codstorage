@@ -1,11 +1,10 @@
 <script setup>
 const { params: { ipld } } = useRoute()
-const { data } = await useAsyncData(`repo_${ipld}`, () => useApi(`/ipld/${ipld}`))
+const { data } = await useApi(() => `/ipld/${ipld}`)
 </script>
 
 <template>
 <div class="flex flex-col">
-  <pre> {{ repo }} </pre>
   <table class="table-fixed">
     <thead>
       <tr>

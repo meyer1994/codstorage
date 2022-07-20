@@ -1,13 +1,10 @@
 <script setup>
-const { provider, signer } = useEthers()
-const { data } = await useAsyncData('repos', () => useApi('/repos'))
+const { data, error } = await useApi(() => '/repos')
 </script>
 
 <template>
 <div class="flex flex-col">
-  <div> Repos </div>
-  <div> {{ client }} </div>
-
+  <h1> Repos </h1>
   <table>
     <thead>
       <tr>
@@ -36,5 +33,8 @@ const { data } = await useAsyncData('repos', () => useApi('/repos'))
       </tr>
     </tbody>
   </table>
+
+  <h1> Response </h1>
+  <pre> {{ data }} </pre>
 </div>
 </template>

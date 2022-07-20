@@ -11,11 +11,6 @@
     "@tailwindcss/forms": "^0.5.2",
     "@tailwindcss/line-clamp": "^0.4.0",
     "@vueuse/nuxt": "^8.9.4",
-    "nuxt": "3.0.0-rc.5"
-  },
-  "dependencies": {
-    "@xmtp/xmtp-js": "^5.0.0",
-    "ethers": "^5.6.9",
-    "ipfs-http-client": "^57.0.3"
+    "nuxt": "^3.0.0-rc.6"
   }
 }
