@@ -5,7 +5,8 @@ on:
   - pull_request
 
 defaults:
-  working-directory: ./app
+  run:
+    working-directory: ./app
 
 jobs:
   build:
