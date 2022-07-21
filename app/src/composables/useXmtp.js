@@ -1,11 +1,14 @@
 import { Client } from '@xmtp/xmtp-js'
-import { Web3Provider } from 'ethers'
+import { ethers } from 'ethers'
 
 import { useMetamask } from '@/composables/useMetamask'
 
 export const useXmtp = async () => {
-  const { ethereum } = useMetamask()
-  const provider = new Web3Provider(ethereum)
+  const { ethereum, request } = useMetamask()
+  const provider = new ethers.providers.Web3Provider(ethereum)
+  request()
   const signer = provider.getSigner()
-  return await Client.create(signer)
+  return await Client.create(signer, {
+    waitForPeersTimeoutMs: 20000  // 20 seconds
+  })
 }

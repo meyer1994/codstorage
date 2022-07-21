@@ -1,9 +1,14 @@
 <script setup>
-import { Wallet } from 'ethers'
-import { Client } from '@xmtp/xmtp-js'
-console.log(Wallet, Client)
 import { useApi } from '@/composables/useApi'
-const { data } = useApi('repos')
+import { useXmtp } from '@/composables/useXmtp'
+
+const { data } = await useApi('repos')
+
+const xmtp = useXmtp()
+
+const share = async () => {
+  console.log(await xmtp)
+}
 </script>
 
 <template>
