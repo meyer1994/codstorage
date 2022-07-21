@@ -1,5 +1,9 @@
 <script setup>
-const { data, error } = await useApi(() => '/repos')
+import { Wallet } from 'ethers'
+import { Client } from '@xmtp/xmtp-js'
+console.log(Wallet, Client)
+import { useApi } from '@/composables/useApi'
+const { data } = useApi('repos')
 </script>
 
 <template>
@@ -19,16 +23,16 @@ const { data, error } = await useApi(() => '/repos')
       <tr class="border-y" v-for="(v, k) of data" :key="k">
         <!-- IPFS -->
         <td class="py-2 font-mono">
-          <NuxtLink class="hover:text-blue-800 hover:underline" :to="`/repos/${v.ipld}`">
+          <router-link class="hover:text-blue-800 hover:underline" :to="`/repos/${v.ipld}`">
             {{ v.ipfs }}
-          </NuxtLink>
+          </router-link>
         </td>
 
         <!-- IPLD -->
         <td class="py-2 font-mono">
-          <NuxtLink class="hover:text-blue-800 hover:underline" :to="`/repos/${v.ipld}`">
+          <router-link class="hover:text-blue-800 hover:underline" :to="`/repos/${v.ipld}`">
             {{ v.ipld }}
-          </NuxtLink>
+          </router-link>
         </td>
 
         <!-- Likes -->

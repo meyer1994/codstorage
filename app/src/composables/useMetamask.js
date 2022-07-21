@@ -1,9 +1,10 @@
+import { computed, onMounted, ref } from 'vue'
 
 export const useMetamask = () => {
-  const ethereum = useState('metamask_ethereum', () => null)
+  const ethereum = ref(null)
   const enabled = computed(() => !!ethereum.value)
 
-  const account = useState('metamask_account', () => null)
+  const account = ref(null)
   const connected = computed(() => !!account.value)
 
   onMounted(() => (ethereum.value = window.ethereum))

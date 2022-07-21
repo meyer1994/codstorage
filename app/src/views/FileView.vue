@@ -1,6 +1,10 @@
 <script setup>
+import { useRoute } from 'vue-router'
+
+import { useApi } from '@/composables/useApi'
+
 const { params: { ipfs } } = useRoute()
-const { data } = await useApi(() => `/files/${ipfs}`)
+const { data } = await useApi(`files/${ipfs}`)
 </script>
 
 <template>

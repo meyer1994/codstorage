@@ -1,18 +1,27 @@
 <script setup>
+import { computed, watch } from 'vue'
+import { useRoute } from 'vue-router'
+
+import { useApi } from '@/composables/useApi'
+
 const { params: { ipld } } = useRoute()
 
-const { data } = await useApi(() => `/ipld/${ipld}`)
+const { data } = await useApi(`ipld/${ipld}`)
+watch(ipld, async () => {
+  const { data: reloaded } = await useApi(`ipld/${ipld}`)
+  data.value = reloaded.value
+})
 
 const dirs = computed(() => {
   return Object.entries(data.value)
-    .filter(([k, v]) => !v['/'].startsWith('Qm'))
+    .filter(([k, v]) => !v['/'].startsWith('Qm'))  // eslint-disable-line no-unused-vars
     .sort((a, b) => a[0].localeCompare(b[0]))
     .map(([k, v]) => [k, v['/']])
 })
 
 const files = computed(() => {
   return Object.entries(data.value)
-    .filter(([k, v]) => v['/'].startsWith('Qm'))
+    .filter(([k, v]) => v['/'].startsWith('Qm'))  // eslint-disable-line no-unused-vars
     .sort((a, b) => a[0].localeCompare(b[0]))
     .map(([k, v]) => [k, v['/']])
 })
@@ -32,27 +41,27 @@ const files = computed(() => {
     <tbody>
       <tr class="border-y" v-for="[name, link] of dirs" :key="name">
         <td class="py-1 font-mono">
-          <NuxtLink class="hover:text-blue-800 hover:underline" :to="`/trees/${link}`">
+          <router-link class="hover:text-blue-800 hover:underline" :to="`/trees/${link}`">
             {{ name }}
-          </NuxtLink>
+          </router-link>
         </td>
         <td class="py-1 font-mono" :title="link">
-          <NuxtLink class="hover:text-blue-800 hover:underline" :to="`/trees/${link}`">
+          <router-link class="hover:text-blue-800 hover:underline" :to="`/trees/${link}`">
             {{ link }}
-          </NuxtLink>
+          </router-link>
         </td>
       </tr>
 
       <tr class="border-y" v-for="[name, link] of files" :key="name">
         <td class="py-1 font-mono">
-          <NuxtLink class="hover:text-blue-800 hover:underline" :to="`/files/${link}`">
+          <router-link class="hover:text-blue-800 hover:underline" :to="`/files/${link}`">
             {{ name }}
-          </NuxtLink>
+          </router-link>
         </td>
         <td class="py-1 font-mono" :title="link">
-          <NuxtLink class="hover:text-blue-800 hover:underline" :to="`/files/${link}`">
+          <router-link class="hover:text-blue-800 hover:underline" :to="`/files/${link}`">
             {{ link }}
-          </NuxtLink>
+          </router-link>
         </td>
       </tr>
     </tbody>

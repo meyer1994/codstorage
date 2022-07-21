@@ -1,9 +1,11 @@
 <script setup>
+import { useMetamask } from '@/composables/useMetamask'
+
 const { enabled, request, account } = useMetamask()
 
 const login = async () => {
-  const [head, ...tail] = await request({ method: 'eth_requestAccounts' })
-  account.value = head
+  const accounts = await request({ method: 'eth_requestAccounts' })
+  account.value = accounts[0]
 }
 </script>
 
@@ -11,7 +13,7 @@ const login = async () => {
 <div class="flex justify-between items-center">
   <!-- Left -->
   <div>
-    <NuxtLink to="/"> Home </NuxtLink>
+    <router-link to="/"> Home </router-link>
   </div>
 
   <!-- Center -->

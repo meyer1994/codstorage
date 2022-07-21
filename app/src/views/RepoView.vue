@@ -1,6 +1,10 @@
 <script setup>
+import { useRoute } from 'vue-router'
+
+import { useApi } from '@/composables/useApi'
+
 const { params: { ipld } } = useRoute()
-const { data } = await useApi(() => `/ipld/${ipld}`)
+const { data } = await useApi(`ipld/${ipld}`)
 </script>
 
 <template>
@@ -18,16 +22,16 @@ const { data } = await useApi(() => `/ipld/${ipld}`)
       <tr class="border-y" v-for="(v, k) of data" :key="k">
         <!-- Branch name -->
         <td class="py-2 font-mono">
-          <NuxtLink class="hover:text-blue-800 hover:underline" :to="`/branches/${v['/']}`">
+          <router-link class="hover:text-blue-800 hover:underline" :to="`/branches/${v['/']}`">
             {{ k }}
-          </NuxtLink>
+          </router-link>
         </td>
 
         <!-- IPLD -->
         <td class="py-2 font-mono">
-          <NuxtLink class="hover:text-blue-800 hover:underline" :to="`/branches/${v['/']}`">
+          <router-link class="hover:text-blue-800 hover:underline" :to="`/branches/${v['/']}`">
             {{ v['/'] }}
-          </NuxtLink>
+          </router-link>
         </td>
       </tr>
     </tbody>

@@ -1,6 +1,10 @@
 <script setup>
+import { useRoute } from 'vue-router'
+
+import { useApi } from '@/composables/useApi'
+
 const { params: { ipld } } = useRoute()
-const { data } = await useApi(() => `/ipld/${ipld}`)
+const { data } = await useApi(`ipld/${ipld}`)
 </script>
 
 <template>
@@ -20,13 +24,13 @@ const { data } = await useApi(() => `/ipld/${ipld}`)
       <tr class="border-y" v-for="i of data" :key="i.hash">
         <!-- Hash -->
         <td class="py-1 font-mono">
-          <NuxtLink
+          <router-link
             class="hover:text-blue-800 hover:underline"
             :title="i.hash"
             :to="`/trees/${i['tree']['/']}`"
           >
             {{ i.hash.substring(0, 8) }}
-          </NuxtLink>
+          </router-link>
         </td>
 
         <!-- Message -->

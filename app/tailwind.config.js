@@ -1,6 +1,8 @@
+/** @type {import('tailwindcss').Config} */
 module.exports = {
-  plugins: [
-    require('@tailwindcss/forms'),
-    require('@tailwindcss/line-clamp'),
-  ]
+  content: ['./public/**/*.html', './src/**/*.{vue,js,ts,jsx,tsx}'],
+  theme: {
+    extend: {},
+  },
+  plugins: [],
 }
