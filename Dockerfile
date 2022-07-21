@@ -16,4 +16,7 @@ COPY ./ ./
 
 ENV PORT=8000
 
-CMD ipfs daemon --init & uvicorn codstorage:app --port $PORT --host 0.0.0.0
+# `forwarded-allow-ips` flag added because fastapi redirects to http
+#   https://stackoverflow.com/a/64146281
+CMD ipfs daemon --init \
+    & uvicorn codstorage:app --port $PORT --host 0.0.0.0 --forwarded-allow-ips '*'
