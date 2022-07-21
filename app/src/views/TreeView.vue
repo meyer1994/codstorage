@@ -1,5 +1,5 @@
 <script setup>
-import { computed, watch } from 'vue'
+import { computed } from 'vue'
 import { useRoute } from 'vue-router'
 
 import { useApi } from '@/composables/useApi'
@@ -7,10 +7,6 @@ import { useApi } from '@/composables/useApi'
 const { params: { ipld } } = useRoute()
 
 const { data } = await useApi(`ipld/${ipld}`)
-watch(ipld, async () => {
-  const { data: reloaded } = await useApi(`ipld/${ipld}`)
-  data.value = reloaded.value
-})
 
 const dirs = computed(() => {
   return Object.entries(data.value)
