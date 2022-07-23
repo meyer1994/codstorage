@@ -20,6 +20,7 @@ const connect = async () => {
 
   <!-- Right -->
   <div>
+    <router-link to="/likes"> Likes </router-link>
     <button @click="connect">
       Metamask
       <span v-if="account" :title="account">

@@ -7,6 +7,11 @@ const routes = [
     component: () => import(/* webpackChunkName: "group-landing" */ '@/views/ReposView'),
   },
   {
+    path: '/likes',
+    name: 'likes',
+    component: () => import(/* webpackChunkName: "group-landing" */ '@/views/LikesView'),
+  },
+  {
     path: '/repos/:ipld',
     name: 'repo',
     component: () => import(/* webpackChunkName: "group-landing" */ '@/views/RepoView'),
