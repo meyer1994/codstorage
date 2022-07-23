@@ -1,14 +1,22 @@
-import { Client } from '@xmtp/xmtp-js'
 import { ethers } from 'ethers'
+import { Client } from '@xmtp/xmtp-js'
+import { shallowReactive } from 'vue'
 
-import { useMetamask } from '@/composables/useMetamask'
+import { useEthereum } from '@/composables/useEthereum'
+
+const xmtp = shallowReactive({
+  xmtp: null,
+})
 
 export const useXmtp = async () => {
-  const { ethereum, request } = useMetamask()
-  const provider = new ethers.providers.Web3Provider(ethereum)
-  request()
-  const signer = provider.getSigner()
-  return await Client.create(signer, {
-    waitForPeersTimeoutMs: 20000  // 20 seconds
-  })
+  const { ethereum, request } = useEthereum()
+
+  const authenticate = async () => {
+    await request()
+    const provider = new ethers.providers.Web3Provider(ethereum)
+    const signer = provider.getSigner()
+    xmtp.xmtp = await Client.create(signer)
+  }
+
+  return { ...xmtp, authenticate }
 }

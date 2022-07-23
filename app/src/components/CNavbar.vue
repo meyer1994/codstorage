@@ -1,11 +1,10 @@
 <script setup>
-import { useMetamask } from '@/composables/useMetamask'
+import { useEthereum } from '@/composables/useEthereum'
 
-const { enabled, request, account } = useMetamask()
+const { account, request } = useEthereum()
 
-const login = async () => {
-  const accounts = await request({ method: 'eth_requestAccounts' })
-  account.value = accounts[0]
+const connect = async () => {
+  await request()
 }
 </script>
 
@@ -21,9 +20,11 @@ const login = async () => {
 
   <!-- Right -->
   <div>
-    <button :class="{ disabled: !enabled }" @click="login">
-      <span v-if="!account"> Connect </span>
-      <span v-else> Connected ({{ account.substring(0, 8) }})</span>
+    <button @click="connect">
+      Metamask
+      <span v-if="account" :title="account">
+        ({{ account.substring(0, 8) }})
+      </span>
     </button>
   </div>
 </div>

@@ -8,11 +8,14 @@
     "lint": "vue-cli-service lint"
   },
   "dependencies": {
+    "@glazed/did-datastore": "^0.3.2",
+    "@self.id/web": "^0.4.2",
     "@vueuse/core": "^8.9.4",
     "@xmtp/xmtp-js": "^5.0.0",
     "autoprefixer": "^10",
     "core-js": "^3.8.3",
     "ethers": "^5.6.9",
+    "key-did-provider-ed25519": "^2.0.1",
     "postcss": "^8",
     "tailwindcss": "^3",
     "vue": "^3.2.13",

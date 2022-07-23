@@ -1,13 +1,40 @@
 <script setup>
+import { computed, ref } from 'vue'
+
 import { useApi } from '@/composables/useApi'
-import { useXmtp } from '@/composables/useXmtp'
+import { useCeramic } from '@/composables/useCeramic'
+
+const { authenticate } = useCeramic()
 
 const { data } = await useApi('repos')
 
-const xmtp = useXmtp()
+const store =  await authenticate()
+const likeds = await store.get('likes')
+likeds.repos = likeds.repos ? likeds.repos : []
 
-const share = async () => {
-  console.log(await xmtp)
+const liked = ref(likeds)
+
+const repos = computed(() => {
+  return data.value.map(i => ({
+    ...i,
+    liked: liked.value.repos.some(j => j.ipfs === i.ipfs)
+  }))
+})
+
+const like = async (item) => {
+  const store = await authenticate()
+  const { repos = [] } = await store.get('likes')
+  repos.push(item)
+  await store.set('likes', { repos })
+  liked.value = await store.get('likes')
+}
+
+const unlike = async (item) => {
+  const store = await authenticate()
+  const { repos = [] } = await store.get('likes')
+  const newrepos = repos.filter(i => i.ipfs !== item.ipfs)
+  await store.set('likes', { repos: newrepos })
+  liked.value = await store.get('likes')
 }
 </script>
 
@@ -25,7 +52,7 @@ const share = async () => {
     </thead>
 
     <tbody>
-      <tr class="border-y" v-for="(v, k) of data" :key="k">
+      <tr class="border-y" v-for="(v, k) of repos" :key="k">
         <!-- IPFS -->
         <td class="py-2 font-mono">
           <router-link class="hover:text-blue-800 hover:underline" :to="`/repos/${v.ipld}`">
@@ -42,7 +69,8 @@ const share = async () => {
 
         <!-- Likes -->
         <td class="py-2">
-          {{ v.likes }}
+          <button v-if="!v.liked" @click="like(v)"> Like </button>
+          <button v-else @click="unlike(v)"> Unlike </button>
         </td>
 
         <!-- Share -->
