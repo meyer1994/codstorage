@@ -2,9 +2,11 @@
 import { computed, ref } from 'vue'
 
 import { useApi } from '@/composables/useApi'
+import { useXmtp } from '@/composables/useXmtp'
 import { useCeramic } from '@/composables/useCeramic'
 
 const { authenticate } = useCeramic()
+const { authenticate: xmtpAuth } = await useXmtp()
 
 const { data } = await useApi('repos')
 
@@ -35,6 +37,13 @@ const unlike = async (item) => {
   const newrepos = repos.filter(i => i.ipfs !== item.ipfs)
   await store.set('likes', { repos: newrepos })
   liked.value = await store.get('likes')
+}
+
+const share = async (item) => {
+  console.log(item)
+  // This always timeout...
+  const xmtp = await xmtpAuth()
+  console.log(xmtp)
 }
 </script>
 
@@ -75,7 +84,7 @@ const unlike = async (item) => {
 
         <!-- Share -->
         <td class="py-2">
-          <button @click="share"> Share </button>
+          <button @click="share(v)"> Share </button>
         </td>
       </tr>
     </tbody>
