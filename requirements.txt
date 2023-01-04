@@ -9,7 +9,7 @@ GitPython==3.1.29
 greenlet==2.0.0
 h11==0.12.0
 httpcore==0.15.0
-httpx==0.23.0
+httpx==0.23.3
 idna==3.4
 pfluent==0.0.1
 pydantic==1.10.2
